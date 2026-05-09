@@ -1,6 +1,6 @@
 # Urbano Express Orders
 
-Implementacion del challenge tecnico de Urbano Express usando Laravel 11, Vue 3 y Docker.
+Implementacion del challenge tecnico de Urbano Express usando Laravel 11, Vue 3 y Docker con PHP 8.4 en contenedores.
 
 ## Alcance
 
@@ -62,11 +62,68 @@ extension=pdo_sqlite
 
 ## Docker
 
+### Levantar con Docker Compose
+
 ```bash
 docker compose up --build
 ```
 
 La app queda disponible en `http://localhost:8000`.
+La imagen base usada por Docker es `php:8.4.21-cli`.
+
+Si queres levantarlo en segundo plano:
+
+```bash
+docker compose up --build -d
+```
+
+Para ver logs del contenedor:
+
+```bash
+docker compose logs -f
+```
+
+Para detenerlo:
+
+```bash
+docker compose down
+```
+
+### Levantar con `docker build` y `docker run`
+
+Construir la imagen:
+
+```bash
+docker build -t desafio_urbano .
+```
+
+Ejecutar el contenedor:
+
+```bash
+docker run --rm -p 8000:8000 --name desafio_urbano_app desafio_urbano
+```
+
+La aplicacion queda disponible en `http://localhost:8000`.
+
+### Comandos utiles dentro del contenedor
+
+Abrir una shell:
+
+```bash
+docker exec -it desafio_urbano_app sh
+```
+
+Correr tests:
+
+```bash
+docker exec -it desafio_urbano_app php artisan test
+```
+
+Forzar migraciones manualmente:
+
+```bash
+docker exec -it desafio_urbano_app php artisan migrate --force
+```
 
 ## Endpoints
 
